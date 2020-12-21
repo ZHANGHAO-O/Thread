@@ -1,0 +1,84 @@
+public class 为线程指定要运行的指令 {
+    static class MyThread extends Thread{
+        @Override
+        public void run(){
+
+                while (true){
+                    System.out.println("我的子线程");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Thread thread = new Thread();
+        thread.start();
+
+        while (true){
+            System.out.println("我的父线程");
+        }
+    }
+}
+public class 通过Runnable启动线程 {
+    static class MyRunnable implements Runnable{
+        @Override
+        public void run(){
+            while (true){
+                System.out.println("我的子线程");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Runnable runnable = new MyRunnable();
+        Thread thread = new Thread(runnable);
+        thread.start();
+        while (true){
+            System.out.println("我的父线程");
+        }
+    }
+}
+public class 把Thread当Runnable使用 {
+    static class MyThread extends Thread{
+        @Override
+        public void run() {
+            while (true){
+                System.out.println("我的子线程");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Thread runnable = new MyThread();
+        Thread thread = new Thread(runnable);
+        thread.start();
+
+    }
+}
+import java.util.Scanner;
+
+public class test {
+    private static long fib(int n){
+        if (n<2){
+            return n;
+        }
+        return  fib(n-1)+fib(n-2);
+    }
+    private static class MyThread extends Thread{
+        private final int n;
+        MyThread(int n){
+            this.n = n;
+        }
+        @Override
+        public void run() {
+            System.out.println(fib(n));
+        }
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while (true){
+            int n = scanner.nextInt();
+            Thread thread = new MyThread(n);
+            thread.start();
+        }
+    }
+}
